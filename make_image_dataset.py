@@ -1,9 +1,9 @@
-import utils.dataset.replace_in_files_and_directories as replace_in_files_and_directories
-import utils.dataset.copy_directory as copy_directory
-import utils.dataset.add_prefix_to_files as add_prefix_to_files
-import utils.dataset.resize_and_copy_images as resize_and_copy_images
-import utils.dataset.flip_and_rename_images as flip_and_rename_images
-import utils.dataset.copy_files_flat_with_report as copy_files_flat_with_report
+import utils.dataset.replace_in_files_and_directories as func1
+import utils.dataset.copy_directory as func2
+import utils.dataset.add_prefix_to_files as func3
+import utils.dataset.resize_and_copy_images as func4
+import utils.dataset.flip_and_rename_images as func5
+import utils.dataset.copy_files_flat_with_report as func6
 
 ######## Parameters: 作業工程
 # 0 キャプションファイル生成後にキャプションファイルと画像ファイルを分別する
@@ -51,7 +51,7 @@ dir_final_place = "image_and_caption_merged_path"
 #directory_data = list_files_and_directories(start_directory, output_path)
 
 #### 2 サブディレクトリを含むディレクトリ下のファイルをフラットにコピー
-#copy_files_flat_with_report(source_directory, destination_directory, report_file):
+#func6.copy_files_flat_with_report(source_directory, destination_directory, report_file):
 
 ######## Make Caption Files and LR-Flipped Copies, and prefix
 #### 3 １で作ったディレクトリ構造を基に指定したディレクトリのファイルを構造を作成してコピー
@@ -68,27 +68,27 @@ destination_dir = dir_replace_texts
 replacements = [('left', 'right'),('right', 'left')]
 report_path = "./report_2_file_replace_texts.txt"
 list_file = "./replace_dir_text.txt"
-replace_in_files_and_directories(source_dir, destination_dir, replacements, report_path, list_file)
+func1.replace_in_files_and_directories(source_dir, destination_dir, replacements, report_path, list_file)
 
 #### 5 ディレクトリ丸ごとコピー
 source_dir = dir_replace_texts
 destination_dir = dir_replace_texts_copied_1
-copy_directory(source_dir, destination_dir)
+func2.copy_directory(source_dir, destination_dir)
 
 #### 6 ファイル名にプリフィックスを付与
 directory_path = dir_replace_texts_copied_1
 file_prefix = "1_"
-add_prefix_to_files(directory_path, file_prefix)
+func3.add_prefix_to_files(directory_path, file_prefix)
 
 #### 7 ディレクトリ丸ごとコピー
 source_dir = dir_copied_caption
 destination_dir = dir_replace_texts_copied_2
-copy_directory(source_dir, destination_dir)
+func2.copy_directory(source_dir, destination_dir)
 
 #### 8 ファイル名にプリフィックスを付与
 directory_path = dir_replace_texts_copied_2
 file_prefix = "2_"
-add_prefix_to_files(directory_path, file_prefix)
+func3.add_prefix_to_files(directory_path, file_prefix)
 
 
 
@@ -97,29 +97,29 @@ add_prefix_to_files(directory_path, file_prefix)
 source_dir = dir_source_images
 destination_dir = dir_resized_images
 image_target_size = 1024  # 新しいサイズ
-resize_and_copy_images(source_dir, destination_dir, image_target_size)
+func4.resize_and_copy_images(source_dir, destination_dir, image_target_size)
 
 #### 9 ディレクトリ丸ごとコピー
 source_dir = dir_resized_images
 destination_dir = dir_replace_images_copied_1
-copy_directory(source_dir, destination_dir)
+func2.copy_directory(source_dir, destination_dir)
 
 #### 10 ファイル名にプリフィックスを付与
 directory_path = dir_replace_images_copied_1
 file_prefix = "2_"
-add_prefix_to_files(directory_path, file_prefix)
+func3.add_prefix_to_files(directory_path, file_prefix)
 
 #### 11 画像を左右反転してディレクトリ構造持してコピー
 source_dir = dir_resized_images
 destination_base = dir_replace_images_copied_2
 #replacements = [('old_text', 'new_text')]
 replacements = [('right', 'left'),('left', 'right')]
-flip_and_rename_images(source_dir, destination_base, replacements)
+func5.flip_and_rename_images(source_dir, destination_base, replacements)
 
 #### 12 ファイル名にプリフィックスを付与
 directory_path = dir_replace_images_copied_2
 file_prefix = "1_"
-add_prefix_to_files(directory_path, file_prefix)
+func3.add_prefix_to_files(directory_path, file_prefix)
 
 
 
@@ -129,23 +129,23 @@ add_prefix_to_files(directory_path, file_prefix)
 source_dir = dir_replace_texts_copied_1
 destination_dir = dir_final_place
 report_path = "./report_3_copy_files_flat_captions.txt"
-copy_files_flat_with_report(source_dir, destination_dir, report_path)
+func6.copy_files_flat_with_report(source_dir, destination_dir, report_path)
 
 # キャプションファイルを指定したディレクトリにフラットにコピー
 source_dir = dir_replace_texts_copied_2
 destination_dir = dir_final_place
 report_path = "./report_4_copy_files_flat_captions.txt"
-copy_files_flat_with_report(source_dir, destination_dir, report_path)
+func6.copy_files_flat_with_report(source_dir, destination_dir, report_path)
 
 #### 14 サブディレクトリを含むディレクトリ下のファイルをフラットにコピー
 # 画像ファイルを指定したディレクトリにフラットにコピー
 source_dir = dir_replace_images_copied_1
 destination_dir = dir_final_place
 report_path = "./report_5_copy_files_flat_images.txt"
-copy_files_flat_with_report(source_dir, destination_dir, report_path)
+func6.copy_files_flat_with_report(source_dir, destination_dir, report_path)
 
 # 画像ファイルを指定したディレクトリにフラットにコピー
 source_dir = dir_replace_images_copied_2
 destination_dir = dir_final_place
 report_path = "./report_6_copy_files_flat_images.txt"
-copy_files_flat_with_report(source_dir, destination_dir, report_path)
+func6.copy_files_flat_with_report(source_dir, destination_dir, report_path)
