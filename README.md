@@ -65,5 +65,5 @@ The script also does rescaling images.
 The script makes lr-flip then;
 - make flipped files both of images and caption, separately in specified directories.
 - the directory name having "right" and "left"are replaced with "left" and "right", respectively
-- "right" or left in caption text also replaced, respectively
-- when the right or left is not specified in caption, the replacement will use directory name directory "directright" adds "from directly right, from right, from side" for example for original directory and do lr-flip
+- "right" or "left" in caption text also replaced, respectively
+- when the "right" or "left" is not specified in caption, the replacement will use directory name, for example directory "directright" adds "from directly right, from right, from side" for example for original directory and do lr-flip
