@@ -24,17 +24,11 @@ def write_duplicates_to_file(duplicates, output_file):
                 name, ext = os.path.splitext(file_name)
                 f.write(f"{name},{ext},{directory}\n")
 
-def main():
-    # 特定のディレクトリR
-    directory_r = "path"
-
+def report_duplicate(directory_r, path, output_file):
     # 重複ファイルを見つける
     duplicates = find_duplicate_files(directory_r)
 
     # 結果をファイルに書き込む
-    output_file = "./duplicate_files_list.csv"
+    output_file = path+output_file
     write_duplicates_to_file(duplicates, output_file)
     print(f"重複ファイルのリストが{output_file}に出力されました。")
-
-if __name__ == "__main__":
-    main()

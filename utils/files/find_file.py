@@ -25,9 +25,3 @@ def find_files_with_tokens_or_words(directory, tokens_words_file_path, ext):
             for word in words:
                 if word in tokens_words_to_find: 
                     print(f"word:{word} {filename}")
-
-# Example usage 
-ext = 'caption'
-input_directory = "input_file_path"
-find_list_directry = "./find_list.txt"
-find_files_with_tokens_or_words(input_directory, find_list_directry, ext)
