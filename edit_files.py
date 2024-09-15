@@ -5,6 +5,7 @@ import utils.files.report_duplicate as rep_dup
 import argparse
 
 open('utils/__init__.py', 'a').close()
+open('utils/files/__init__.py', 'a').close()
 
 parser = argparse.ArgumentParser(description="args")
 

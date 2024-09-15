@@ -3,6 +3,7 @@ import utils.images.remove_metadata_from_jpeg_files as rm_metas
 import argparse
 
 open('utils/__init__.py', 'a').close()
+open('utils/images/__init__.py', 'a').close()
 
 parser = argparse.ArgumentParser(description="args")
 

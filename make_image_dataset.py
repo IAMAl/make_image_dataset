@@ -5,6 +5,9 @@ import utils.dataset.resize_and_copy_images as func4
 import utils.dataset.flip_and_rename_images as func5
 import utils.dataset.copy_files_flat_with_report as func6
 
+open('utils/__init__.py', 'a').close()
+open('utils/dataset/__init__.py', 'a').close()
+
 ######## Parameters: 作業工程
 # 0 キャプションファイル生成後にキャプションファイルと画像ファイルを分別する
 #source_dir = "../root_dir_caption_generated"

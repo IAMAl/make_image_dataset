@@ -6,6 +6,7 @@ import utils.texts.rename_words_from_directory_updated as rename_word
 import argparse
 
 open('utils/__init__.py', 'a').close()
+open('utils/texts/__init__.py', 'a').close()
 
 parser = argparse.ArgumentParser(description="args")
 
