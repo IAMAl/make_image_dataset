@@ -30,17 +30,7 @@ def replace_metadata(image_path, new_metadata=None):
         # 画像を保存する（元のファイルを上書きするので注意）
         img.save(image_path)
 
-# 指定するディレクトリのパス
-directory_path = "/path/to/your/directory"
 
-# 置き換えたいメタデータ
-new_metadata = {
-    # 例: "Make" (カメラのメーカー)
-    271: "New Make",
-    # 例: "Model" (カメラのモデル)
-    272: "New Model",
-    # 他にも必要なExifタグを追加できます
-}
 
 # 指定されたディレクトリ以下のすべてのJPEGファイルからメタデータを削除する
 remove_metadata_from_jpeg_files(directory_path, new_metadata)

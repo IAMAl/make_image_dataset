@@ -1,6 +1,6 @@
 import os
 
-def append_text_to_files(directory, text_file_path, append=True):
+def append_text_to_files(directory, text_file_path, ext, append=True):
     # ファイルBの内容を読み込む
     with open(text_file_path, 'r', encoding='utf-8') as file_b:
         appended_text = ','.join(line.strip() for line in file_b)
@@ -10,7 +10,7 @@ def append_text_to_files(directory, text_file_path, append=True):
     for filename in os.listdir(directory):
         print(filename)
         file_path = os.path.join(directory, filename)
-        if os.path.isfile(file_path) and filename.endswith('.caption'):
+        if os.path.isfile(file_path) and filename.endswith('.'+ext):
             if append:
                 # ファイルを読み込んで既存の内容を取得
                 with open(file_path, 'r', encoding='utf-8') as file:
@@ -25,11 +25,3 @@ def append_text_to_files(directory, text_file_path, append=True):
                 # ファイルの末尾に追加する
                 with open(file_path, 'a', encoding='utf-8') as file_to_append:
                     file_to_append.write(existing_text + ',' + appended_text)
-
-# ディレクトリとファイルBのパスを指定する
-directory_path = 'path'
-text_file_b_path = 'add_list.txt'
-append=True
-
-# テキストをファイルに追加する
-append_text_to_files(directory_path, text_file_b_path, append)

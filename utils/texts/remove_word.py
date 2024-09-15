@@ -33,9 +33,3 @@ def remove_words_from_directory_updated(input_directory, output_directory, words
                 count += 1
 
     print(f"{count} files are explored.")
-
-input_directory = 'source_caption_path'
-output_directory = 'output_caption_path'
-remove_words_file_name = 'remove_list.txt'
-ext = 'caption'
-remove_words_from_directory_updated(input_directory, output_directory, remove_words_file_name, ext)

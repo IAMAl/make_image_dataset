@@ -2,7 +2,7 @@ import os
 
 def rename_words_from_directory_updated(input_directory, output_directory, words_file_name, ext):
     count = 0
-    words_file_path = os.path.join(os.path.dirname(__file__), words_file_name)  
+    words_file_path = os.path.join(os.path.dirname(__file__), words_file_name)
 
     # Reading the words to remove from the words file
     words_from_rename = []
@@ -40,7 +40,7 @@ def rename_words_from_directory_updated(input_directory, output_directory, words
                     filtered_tokens = []
                     tokens = line.strip().split(',')
                     for token in tokens:
-                        if ( len(token) > 1 and not token in filtered_tokens ) or ('v' in token and len(token)==1): 
+                        if ( len(token) > 1 and not token in filtered_tokens ) or ('v' in token and len(token)==1):
                             for index, word in enumerate(words_from_rename):
                                 if word in token and len(token) > 1 and len(word) > 1:
                                     if len(words_to_rename[index].split(',')) == 2:
@@ -48,7 +48,7 @@ def rename_words_from_directory_updated(input_directory, output_directory, words
                                             words_to_rename[index] = words_to_rename[index].split(',')[1]
                                         elif len(words_to_rename[index].split(',')[1]) == 1:
                                             words_to_rename[index] = words_to_rename[index].split(',')[0]
-                                            
+
                                     token = token.replace(word, words_to_rename[index]).replace('\n','')
                                     print(f"{word} → {words_to_rename[index]}")
                             filtered_tokens.append(token)
@@ -62,11 +62,3 @@ def rename_words_from_directory_updated(input_directory, output_directory, words
                 count += 1
 
     print(f"{count} files are explored.")
-
-# Example usage for debugging
-input_directory = 'source_caption_path'
-output_directory = 'output_caption_path'
-rename_words_file_name = 'rename_list.txt'
-ext = 'caption'
-rename_words_from_directory_updated(input_directory, output_directory, rename_words_file_name, ext)
-
