@@ -1,69 +1,150 @@
-# make image dataset
+# Dataset Utilities
 
-### Parent Scrip Files
+データセット処理のための総合的なユーティリティツール群です。
 
-- edit_files.py
+## 目次
 
-  Tools to edit files as batch run.
+- [インストール](#インストール)
+- [使用方法](#使用方法)
+  - [データセット関連コマンド](#データセット関連コマンド)
+  - [ファイル関連コマンド](#ファイル関連コマンド)
+  - [画像関連コマンド](#画像関連コマンド)
+  - [テキスト関連コマンド](#テキスト関連コマンド)
 
-- edit_images.py
+## インストール
 
-  Tools to edit image files as batch run.
+必要なPythonパッケージをインストールします：
 
-- edit_texts.py
+```bash
+pip install pillow tqdm
+```
 
-  Tools to edit texts in files as batch run.
+## 使用方法
 
-- make_image_dataset.py
-   End-to-end dataset composition tool.
+### データセット関連コマンド
 
-### Baseline (Recommended) Work Flow
+#### 1. ファイル内容の置換 (dataset_replace)
+```bash
+python make_image_dataset.py dataset_replace \
+  --src_dir SOURCE_DIR \
+  --dest_dir DEST_DIR \
+  --replacements "old,new" "old2,new2" \
+  --report REPORT_PATH \
+  --list_file LIST_FILE
+```
+- `src_dir`: 元のディレクトリ
+- `dest_dir`: 出力先ディレクトリ
+- `replacements`: 置換ペアのリスト
+- `report`: レポートファイルのパス
+- `list_file`: 置換ルールリストファイル
 
-#### 1. Data Preparation
+#### 2. ディレクトリのコピー (dataset_copy)
+```bash
+python make_image_dataset.py dataset_copy \
+  --src_dir SOURCE_DIR \
+  --dest_dir DEST_DIR
+```
+- `src_dir`: コピー元ディレクトリ
+- `dest_dir`: コピー先ディレクトリ
 
-1. Collect images and puts the files in a directory
-2. Generate caption files with kohya_ss, etc, then the directory includes both of images and captions
-3. make directories for image and caption to manage both separately.
-4. Make Directories as a classs based on poses and camera angles
-   for example, "below", "directright", "drectfront", "front", "left"
-5. Put image and caption files to the directories (drag and drop works)
+#### 3. プレフィックス追加 (dataset_prefix)
+```bash
+python make_image_dataset.py dataset_prefix \
+  --directory DIR \
+  --prefix PREFIX
+```
+- `directory`: 対象ディレクトリ
+- `prefix`: 追加するプレフィックス
 
+### ファイル関連コマンド
 
-#### 2. Remove Background in images
+#### 1. ファイル検索 (file_find)
+```bash
+python make_image_dataset.py file_find \
+  --directory DIR \
+  --tokens_file TOKENS \
+  --ext EXTENSION
+```
+- `directory`: 検索対象ディレクトリ
+- `tokens_file`: 検索キーワードファイル
+- `ext`: 対象ファイルの拡張子
 
-This work improves the accuracy of image generation.
+#### 2. 重複ファイルの削除 (file_rm_dup)
+```bash
+python make_image_dataset.py file_rm_dup \
+  --text_dir TEXT_DIR \
+  --image_dir IMAGE_DIR
+```
+- `text_dir`: テキストファイルディレクトリ
+- `image_dir`: 画像ファイルディレクトリ
 
-#### 3.Check Directories
-- edit_files.py
-  - report duplicated files across directories
-  - remove duplicate files across directories in both of image and caption
-  - rename a part of file name (ex. prefix) for all files
-  - add prefix to all files
-  - find file
+### 画像関連コマンド
 
+#### 1. 画像のリサイズ (image_resize)
+```bash
+python make_image_dataset.py image_resize \
+  --src_dir SOURCE_DIR \
+  --dest_dir DEST_DIR \
+  --size SIZE
+```
+- `src_dir`: 元画像ディレクトリ
+- `dest_dir`: 出力先ディレクトリ
+- `size`: 目標サイズ（ピクセル）
 
-#### 4. Edit Caption Files
+#### 2. 画像の反転 (image_flip)
+```bash
+python make_image_dataset.py image_flip \
+  --src_dir SOURCE_DIR \
+  --dest_dir DEST_DIR \
+  --replacements "left,right" "right,left"
+```
+- `src_dir`: 元画像ディレクトリ
+- `dest_dir`: 出力先ディレクトリ
+- `replacements`: ファイル名の置換ルール
 
-- edit_texts.py
-    - adding text in all text files
-    - remove spaces in text for all files
-    - remove duplicated commas for all files
-    - remove particular words described in list file for all files
-    - statistics report, how many tags and words are in the caption files
+### テキスト関連コマンド
 
-#### 5. Setup make_image_dataset.py
+#### 1. テキスト追加 (text_add)
+```bash
+python make_image_dataset.py text_add \
+  --directory DIR \
+  --text_file TEXT_FILE \
+  --ext EXTENSION \
+  --append BOOL
+```
+- `directory`: 対象ディレクトリ
+- `text_file`: 追加するテキストファイル
+- `ext`: 対象ファイルの拡張子
+- `append`: 先頭に追加する場合はTrue
 
-**Recommend:** Backup image and caption directories before run script.
-The script genarates temporal directries for every steps, recommend to removes the directories before retrying the making.
+#### 2. スペース削除 (text_rm_space)
+```bash
+python make_image_dataset.py text_rm_space \
+  --directory DIR \
+  --ext EXTENSION
+```
+- `directory`: 対象ディレクトリ
+- `ext`: 対象ファイルの拡張子
 
+#### 3. 単語の削除 (text_rm_word)
+```bash
+python make_image_dataset.py text_rm_word \
+  --src_dir SOURCE_DIR \
+  --dest_dir DEST_DIR \
+  --words_file WORDS_FILE \
+  --ext EXTENSION
+```
+- `src_dir`: 元ディレクトリ
+- `dest_dir`: 出力先ディレクトリ
+- `words_file`: 削除する単語リストファイル
+- `ext`: 対象ファイルの拡張子
 
-**You need;**
-- set directory paths in make_image_dataset.py including the temporal directories
+## 注意事項
 
-The script also does rescaling images.
+- バックアップを取ってから実行することを推奨します
+- 大量のファイルを処理する場合は、十分なディスク容量を確保してください
+- ファイルパスに日本語が含まれる場合は、適切なエンコーディングを使用してください
 
-The script makes lr-flip then;
-- make flipped files both of images and caption, separately in specified directories.
-- the directory name having "right" and "left"are replaced with "left" and "right", respectively
-- "right" or "left" in caption text also replaced, respectively
-- when the "right" or "left" is not specified in caption, the replacement will use directory name, for example directory "directright" adds "from directly right, from right, from side" for example for original directory and do lr-flip
+## ログ
+
+実行ログは `utils_execution.log` に保存されます。エラーが発生した場合は、このログファイルを確認してください。
